@@ -1,0 +1,171 @@
+#search {
+  width: 700px; }
+
+.customplayer {
+  border: 1px solid lightgrey;
+  background-color: #efefef;
+  height: 166px; }
+
+.uploadtime {
+  font-size: 16px;
+  width: 100%;
+  text-align: right;
+  padding-right: 16px;
+  margin-top: 10px;
+  height: 20px;
+  overflow: hidden;
+  color: #333; }
+
+.albumart {
+  background-size: 100% 100%;
+  float: left;
+  margin: 1px;
+  width: 162px;
+  height: 162px;
+  margin-top: -29px; }
+
+.player {
+  margin-left: 179px;
+  height: 164px;
+  overflow: hidden;
+  margin-top: -30px; }
+
+.play-button {
+  float: left;
+  margin-top: 10px;
+  margin-right: 10px; }
+
+.metadata {
+  margin-top: 16px;
+  white-space: nowrap; }
+
+.artist {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.artist a {
+  color: #666;
+  text-decoration: underline;
+  font-weight: 100; }
+
+.artist a:hover {
+  color: #000000; }
+
+.title {
+  line-height: 18px;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.title a {
+  color: #333;
+  font-weight: 100; }
+
+.title a:hover {
+  color: #000000;
+  text-decoration: none; }
+
+.title a:active {
+  text-decoration: underline; }
+
+.waveform {
+  background-color: #333;
+  background-size: 100% 90px;
+  background-repeat: no-repeat;
+  margin-top: 13px;
+  margin-right: 16px;
+  height: 90px; }
+
+.played {
+  opacity: 0.5;
+  width: 0%;
+  height: 90px;
+  background-color: white;
+  mix-blend-mode: overlay;
+  transition: width 0.1s ease-out; }
+
+.volume {
+  z-index: 10;
+  position: fixed;
+  top: 15px;
+  right: 15px; }
+
+.volume-icon {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 40px; }
+
+.volume-slider-container {
+  display: none;
+  float: left; }
+
+.volume-slider {
+  float: left;
+  position: relative;
+  right: 3px;
+  top: 11px;
+  background-color: #FFFFFF; }
+
+#searchbox {
+  display: inline-block;
+  width: 500px; }
+
+#results .customplayer {
+  opacity: 0; }
+
+.search-date {
+  margin-top: 5px;
+  display: inline-block;
+  max-width: 150px; }
+
+.advanced-search-date {
+  margin-top: 5px;
+  max-width: 105px;
+  display: inline-block; }
+
+.date-input {
+  vertical-align: middle;
+  display: inline-block;
+  width: 140px;
+  border: inset 1px #CCC;
+  background: #FFF;
+  border-radius: 4px;
+  color: #666; }
+
+.date-input * {
+  display: inline-block; }
+
+.date-input input {
+  text-align: center;
+  border: none;
+  background: none;
+  color: #000; }
+
+.date-input-year {
+  width: 30%; }
+
+.date-input-month {
+  width: 20%; }
+
+.date-input-day {
+  width: 20%; }
+
+.load-more {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px; }
+
+.load-more-btn {
+  width: 25%; }
+
+.fadein {
+  animation: fadein 0.2s;
+  animation-fill-mode: forwards; }
+
+@keyframes fadein {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }

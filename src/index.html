@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 Dj Console</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" media="all" href="app/css/application.css" />
+	<style>
+		html, body {
+			margin: 0px;
+			padding: 0px;
+		}
+		body {
+			font-family: 'Helvetica';
+			background: #000000;
+			color: #fff;
+		}
+		.player-header {
+			background: #1F1F21;
+			color: #fefefe;
+			padding: 10px;
+		}
+		#tab {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+		}
+		#search {
+			padding: 50px;
+		}
+		#search-list {
+			list-style: none;
+			margin: 10px 0 0 0;
+			padding: 0;
+		}
+		#search-list li {
+			margin: 0;
+			padding: 0;
+		}
+		p,
+		h3 {
+			padding: 0;
+			margin: 0;
+			padding-bottom: 0.3;
+		}
+		table {
+			width: 100%;
+			table-layout: fixed;
+		}
+		.hidden {
+			display: none;
+		}
+		canvas {
+			width: 100%;
+		}
+		canvas#filter-pad {
+			width: 30em;
+		}
+		p,
+		td {
+			text-align: center;
+		}
+		#clipping-info {
+			font-weight: bold;
+			background-color: red;
+		}
+		#clipping-info.not-clipping {
+			visibility: hidden;
+		}
+		button {
+			width: 10em;
+			height: 4em;
+		}		
+	</style>
+
+    <script src="lib/leap.min.js"></script>
+	<script src="//connect.soundcloud.com/sdk.js"></script>
+
+	<script src="app/audio/dj-console.js"></script>
+	<script src="app/audio/clipping-monitor.js"></script>
+	<script src="app/audio/player.js"></script>
+	<script src="app/audio/visualiser.js"></script>
+	<script src="app/audio/ui.js"></script>
+	<script src="app/audio/filter-pad.js"></script>
+	<script src="app/audio/leap-dj.js"></script>
+	<script src="app/audio/main.js"></script>
+	<script src="app/soundcloud-client.js"></script>
+	<script src="app/audio/track-info.js"></script>
+
+	<script src="app/audio/soundcloud-search.js"></script>
+</head>
+<body>
+
+<section id="main-section" class="hidden">
+	<div class="player-header">
+		<table>
+			<tr>
+				<td id="left-track">
+					<h3 id="left-track-title">Left Track</h3>
+					<p id="left-track-info"></p>
+					<p><button id="pause-left">Pause</button></p>
+				</td>
+				<td>
+					<p>
+						<label for="crossfade-range">Crossfade</label>
+						<input id="crossfade-range" type="range" name="points" min="0" max="100" step="1"/>
+					</p>
+					<p>
+						<label for="master-volume-range">Master & Gain</label>
+						<input id="master-volume-range" type="range" name="points" min="0" max="200" step="1"/>
+					</p>
+					<p id="clipping-info">
+						Clipping
+					</p>
+				</td>
+				<td id="right-track">
+					<h3 id="right-track-title">Right Track</h3>
+					<p id="right-track-info"></p>
+					<p><button id="pause-right">Pause</button></p>
+				</td>
+			</tr>
+		</table>
+
+		<table>
+			<tr>
+				<td><canvas id="left-track-visualisation"></canvas></td>
+				<td><canvas id="right-track-visualisation"></canvas></td>
+			</tr>
+		</table>
+
+	</div>
+
+	<div id="search">
+		<div id="min" style="display: none">
+
+				<form action="javascript:;" class="js-search-song">
+					  <input type="text" name="searchPattern" />
+					  <button type="submit">search</button>
+					</form>
+					<ul class="js-songlist-holder"></ul>
+		</div>
+		<div class="container-fluid">
+			  <div class="row text-center">
+			    <form id="searchform" class="form-inline form-group">
+			      <input id="searchbox" type="text" class="form-control">
+			      <button type="submit" class="btn btn-default">Search</button>
+			      <div class="search">
+			        <label class="control-label" for="search-date">Search for tracks within </label>
+			        <select class="search-date form-control" id="search-date">
+			              <option value="last_hour">last hour</option>
+			              <option value="last_day">last day</option>
+			              <option value="last_week" selected="selected">last week</option>
+			              <option value="last_month">last month</option>
+			              <option value="last_year">last year</option>
+			              <option value="all_time">all time</option>
+			              <option value="custom">custom range...</option>
+			            </select>
+			      </div>
+			      <div class="advanced-search" id="advanced-search" style="display: none">
+			        <select class="advanced-search-date form-control" id="advanced-search-date">
+			              <option value="after" selected="selected">After</option>
+			              <option value="before">Before</option>
+			              <option value="between">Between</option>
+			            </select>
+			        <div class="date-input" id="date1">
+			          <input class="date-input-year" placeholder="YYYY" maxlength="4" type="text"> /
+			          <input class="date-input-month" placeholder="MM" maxlength="2" type="text"> /
+			          <input class="date-input-day" placeholder="DD" maxlength="2" type="text">
+			        </div>
+			        <label class="control-label" id="between-label" style="display: none"> and </label>
+			        <div class="date-input" id="date2" style="display: none">
+			          <input class="date-input-year" placeholder="YYYY" maxlength="4" type="text"> /
+			          <input class="date-input-month" placeholder="MM" maxlength="2" type="text"> /
+			          <input class="date-input-day" placeholder="DD" maxlength="2" type="text">
+			        </div>
+			      </div>
+			    </form>
+			  </div>
+			  <div id="results">
+			  </div>
+			  <div class="load-more" style="display: none">
+			    <button class="load-more-btn btn btn-default" id="load-more-btn">Load More</button>
+			  </div>
+			</div>
+	</div>
+
+
+
+
+
+	<div id="tab">
+
+		<p>
+			<canvas id="filter-pad"></canvas>
+		</p>
+
+		<p id="info"></p>
+
+		<p id="out"></p>
+
+		<p>
+			<label for="filter-enabled">Enable filter</label>
+			<input id="filter-enabled" type="checkbox"/>
+			<label for="filter-type">Filter type</label>
+			<select id="filter-type">
+				<option value="1">HIGHPASS</option>
+				<option value="0">LOWPASS</option>
+			</select>
+		</p>
+
+		<p>
+			<label for="quality-range">Quality</label>
+			<input id="quality-range" type="range" name="points" min="0" max="100" step="1"/>
+			<label for="frequency-range">Frequency</label>
+			<input id="frequency-range" type="range" name="points" min="0" max="100" step="1"/>
+		</p>
+
+	</div>
+
+</section>
+<section id="loading-section">
+	Loading songs from SoundCloud ...
+</section>
+</body>
+</html>
