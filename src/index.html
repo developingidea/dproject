@@ -137,21 +137,80 @@
 					  <button type="submit">search</button>
 					</form>
 					<ul class="js-songlist-holder"></ul>
+
+
+
+				<div id="three-container"></div>
+				<div id="soundcloud">
+				  <div class="img_container"><a id="sc_link" href=""><img id="sc_img" src="" alt=""/></a></div>
+				  <div class="player_container">
+				    <audio id="player" controls="" autoplay="false" preload="preload" autobuffer="autobuffer" src=""></audio>
+				    <input id="audioInput" type="url"/>
+				  </div>
+				</div>
+
+				<style>
+
+				
+#soundcloud {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  .img_container {
+    display: inline-block;
+    float: left;
+    line-height: 0;
+    margin: 0 10px 10px;
+  }
+  .player_container {
+    display: inline-block;
+    float: left;
+  }
+  #player {
+    width: 300px;
+    margin: 10px 0;
+    display: block;
+  }
+  #audioInput {
+    width: 280px;
+    margin: 0;
+    padding: 4px 10px;
+    display: block;
+    outline: none;
+    border: none;
+  }
+  #sc_img {
+    width: 90px;
+  }
+}
+
+@media (max-width: 400px) {
+  #soundcloud {
+    display: none;
+  }
+}
+				</style>
+
+
+
 		</div>
 		<div class="container-fluid">
 			  <div class="row text-center">
 			    <form id="searchform" class="form-inline form-group">
-			      <input id="searchbox" type="text" class="form-control">
+			      <input id="searchbox" type="text" class="form-control" value="dubfire grindhouse">
 			      <button type="submit" class="btn btn-default">Search</button>
 			      <div class="search">
 			        <label class="control-label" for="search-date">Search for tracks within </label>
 			        <select class="search-date form-control" id="search-date">
 			              <option value="last_hour">last hour</option>
 			              <option value="last_day">last day</option>
-			              <option value="last_week" selected="selected">last week</option>
+			              <option value="last_week" >last week</option>
 			              <option value="last_month">last month</option>
 			              <option value="last_year">last year</option>
-			              <option value="all_time">all time</option>
+			              <option value="all_time" selected="selected">all time</option>
 			              <option value="custom">custom range...</option>
 			            </select>
 			      </div>

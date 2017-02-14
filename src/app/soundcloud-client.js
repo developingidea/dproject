@@ -5,10 +5,11 @@ function SoundCloud() {
 		redirect_uri: ''
 	});
 }
-
+// https://api.soundcloud.com/resolve.json?url=https://soundcloud.com/thebpmfestival/sets/bpm2016-artist-sets&client_id=b07647ddc8d151245fe17e491af8299d
+//9165886
 SoundCloud.prototype.loadTracks = function (tracksLoadedCallBack) {
 	var self = this;
-	SC.get('/playlists/9165886/tracks', {}, function(soundCloudTracks, error){
+	SC.get('/playlists/189322959/tracks', {}, function(soundCloudTracks, error){
 		if (!!error) {
 			alert('Error loading connecting to SoundCloud: ' + error.message);
 		}
